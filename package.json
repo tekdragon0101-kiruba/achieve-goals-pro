@@ -1,0 +1,40 @@
+{
+  "name": "achieve-goals-pro",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@cap-js/cds-types": "^0.9.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "dev-mock": "cds watch --profile development",
+    "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "[development]": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url":"db.sqlite"
+        }
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "karan@sap.com": {}
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/tasks"
+  ]
+}

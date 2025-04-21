@@ -1,0 +1,4 @@
+type,descr,critical
+H,High,3
+M,Medium,2
+L,Low,1
