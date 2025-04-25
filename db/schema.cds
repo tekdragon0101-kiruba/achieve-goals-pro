@@ -14,7 +14,7 @@ entity Resources : managed {
         title        : String(200);
         descr        : String(500)                @UI.MultiLineText;
         source       : Association to SourceTypes @mandatory;
-        url          : String(500);
+    key url          : String(500);
         imagePreview : LargeBinary                @Core.MediaType: imageType  @Core.ContentDisposition.Type: 'inline';
         imageType    : String(100)                @Core.IsMediaType;
         goal         : Association to Goals;

@@ -13,12 +13,12 @@ annotate service.Resources with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'descr',
+                Label : '{i18n>Descr}',
                 Value : descr,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'source_type',
+                Label : '{i18n>SourceType}',
                 Value : source_type,
             },
             {
@@ -35,7 +35,7 @@ annotate service.Resources with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'goal_id',
+                Label : '{i18n>Goal}',
                 Value : goal_id,
             },
         ],
