@@ -16,14 +16,16 @@
   "scripts": {
     "start": "cds-serve",
     "dev-mock": "cds watch --profile development",
-    "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-tasks": "cds watch --open tasks/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-resources": "cds watch --open resources/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-goals": "cds watch --open goals/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "[development]": {
     "requires": {
       "db": {
         "kind": "sqlite",
         "credentials": {
-          "url":"db.sqlite"
+          "url": "db.sqlite"
         }
       },
       "auth": {
@@ -35,6 +37,8 @@
     }
   },
   "sapux": [
-    "app/tasks"
+    "app/tasks",
+    "app/resources",
+    "app/goals"
   ]
 }

@@ -19,7 +19,9 @@ annotate db.Tasks with {
 annotate db.Resources with {
     id           @title: '{i18n>ResourceNo}';
     title        @title: '{i18n>Title}';
+    descr       @title: '{i18n>Descr}';
     url          @title: '{i18n>URL}';
+    source      @title: '{i18n>SourceType}';
     imagePreview @title: '{i18n>ImagePreview}';
     imageType    @title: '{i18n>ImageType}';
 };
@@ -46,12 +48,12 @@ annotate db.SourceTypes with {
 };
 
 annotate db.Priority with {
-    type @title : '{i18n>Type}';
-    descr @title : '{i18n>Descr}';
-    critical @title : '{i18n>Critical}';
+    type     @title: '{i18n>Type}';
+    descr    @title: '{i18n>Descr}';
+    critical @title: '{i18n>Critical}';
 };
 
 annotate db.Status with {
-    code @title : '{i18n>Code}';
-    descr @title : '{i18n>Descr}'
+    code  @title: '{i18n>Code}';
+    descr @title: '{i18n>Descr}'
 };
