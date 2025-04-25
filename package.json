@@ -20,18 +20,20 @@
     "watch-resources": "cds watch --open resources/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-goals": "cds watch --open goals/webapp/index.html?sap-ui-xx-viewCache=false"
   },
-  "[development]": {
-    "requires": {
-      "db": {
-        "kind": "sqlite",
-        "credentials": {
-          "url": "db.sqlite"
-        }
-      },
-      "auth": {
-        "kind": "mocked",
-        "users": {
-          "karan@sap.com": {}
+  "cds": {
+    "[development]": {
+      "requires": {
+        "db": {
+          "kind": "sqlite",
+          "credentials": {
+            "url": "db.sqlite"
+          }
+        },
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "karan@sap.com": {}
+          }
         }
       }
     }
