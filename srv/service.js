@@ -1,6 +1,6 @@
 const cds = require('@sap/cds');
 const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
-const { find } = require('@sap/cds/lib/utils/cds-utils');
+const axios = require('axios')
 
 module.exports = class AchieveGoalsService extends cds.ApplicationService {
     init() {
@@ -17,6 +17,7 @@ module.exports = class AchieveGoalsService extends cds.ApplicationService {
 
         this.before('CREATE', [Resources, Resources.drafts], async (req) => {
             await this.sequenceGenerator(req, Resources);
+            await this.fetchResourcesDetailsViaURL(req);
         });
 
         this.before('CREATE', Users, async (req) => {
@@ -47,5 +48,27 @@ module.exports = class AchieveGoalsService extends cds.ApplicationService {
         const maxTaskNoDraft = await SELECT.one.from(entity.drafts).columns('max(id) as maxId');
         const maxTask = (maxTaskNo.maxId > maxTaskNoDraft.maxId ? maxTaskNo : maxTaskNoDraft);
         return maxTask;
+    }
+
+    async fetchResourcesDetailsViaURL(req) {
+        if (!req.data.imagePreview) {
+            const url = req.data.url;
+            const videoId = url.split('v=')[1].split('&')[0];
+            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+            try {
+                const response = await axios.get(thumbnailUrl, { responseType: 'arraybuffer' });
+                req.data.imagePreview = Buffer.from(response.data, 'binary');
+                req.data.imageType = 'image/jpeg';
+                req.data.source_type = await this.isVideoUrl(url);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        }
+    }
+    async isVideoUrl(url) {
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+        const sourceType = (youtubeRegex.test(url)) ? 'Video' : 'Others';
+        return sourceType;
     }
 }
