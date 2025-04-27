@@ -61,9 +61,10 @@ module.exports = class AchieveGoalsService extends cds.ApplicationService {
                 req.data.imagePreview = Buffer.from(response.data, 'binary');
                 req.data.imageType = 'image/jpeg';
                 req.data.source_type = await this.isVideoUrl(url);
+                req.data.imageUrl = thumbnailUrl;
                 const data = await this.getYoutubeVideoDetails(url);
-                req.data.title =  data.title;
-                req.data.descr =  data.description;
+                req.data.title = data.title;
+                req.data.descr = data.description;
             } catch (error) {
                 console.error('Error fetching image:', error);
             }

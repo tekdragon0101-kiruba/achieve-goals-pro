@@ -17,7 +17,8 @@ entity Resources : managed {
     key url          : String(500);
         imagePreview : LargeBinary                @Core.MediaType: imageType  @Core.ContentDisposition.Type: 'inline'  @Core.ContentDisposition.Filename: title;
         imageType    : String(100)                @Core.IsMediaType;
-        goal         : Association to Goals;
+        imageUrl     : String                     @UI.IsImageURL : true       @Common.Text                 : title;
+        goal         : Association to Goals       @mandatory;
         tasks        : Association to many Tasks
                            on tasks.resource = $self;
 }

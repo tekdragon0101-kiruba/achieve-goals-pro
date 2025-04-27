@@ -19,10 +19,11 @@ annotate db.Tasks with {
 annotate db.Resources with {
     id           @title: '{i18n>ResourceNo}';
     title        @title: '{i18n>Title}';
-    descr       @title: '{i18n>Descr}';
+    descr        @title: '{i18n>Descr}';
     url          @title: '{i18n>URL}';
-    source      @title: '{i18n>SourceType}';
+    source       @title: '{i18n>SourceType}';
     imagePreview @title: '{i18n>ImagePreview}';
+    imageUrl     @title: '{i18n>ImageUrl}';
     imageType    @title: '{i18n>ImageType}';
 };
 
