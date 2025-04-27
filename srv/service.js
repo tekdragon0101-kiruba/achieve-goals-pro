@@ -53,7 +53,7 @@ module.exports = class AchieveGoalsService extends cds.ApplicationService {
     async fetchResourcesDetailsViaURL(req) {
         if (!req.data.imagePreview) {
             const url = req.data.url;
-            const videoId = url.split('v=')[1].split('&')[0];
+            const videoId = this.extractVideoId(url);
             const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
             try {
@@ -61,14 +61,41 @@ module.exports = class AchieveGoalsService extends cds.ApplicationService {
                 req.data.imagePreview = Buffer.from(response.data, 'binary');
                 req.data.imageType = 'image/jpeg';
                 req.data.source_type = await this.isVideoUrl(url);
+                const data = await this.getYoutubeVideoDetails(url);
+                req.data.title =  data.title;
+                req.data.descr =  data.description;
             } catch (error) {
                 console.error('Error fetching image:', error);
             }
         }
     }
+
+    extractVideoId(url) {
+        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const matches = url.match(regex);
+        return matches ? matches[1] : null;
+    }
+
     async isVideoUrl(url) {
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
-        const sourceType = (youtubeRegex.test(url)) ? 'Video' : 'Others';
+        const sourceType = youtubeRegex.test(url) ? 'Video' : 'Others';
         return sourceType;
     }
+
+    async getYoutubeVideoDetails(url) {
+        const oEmbedUrl = `https://www.youtube.com/oembed?url=${url}&format=json`;
+
+        try {
+            const response = await axios.get(oEmbedUrl);
+            const data = response.data;
+            return {
+                title: data.title,
+                description: data.author_name // Note: oEmbed does not provide the description directly
+            };
+        } catch (error) {
+            console.error('Error fetching video details:', error);
+            return null;
+        }
+    }
+
 }
